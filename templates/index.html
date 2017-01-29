@@ -1,0 +1,113 @@
+<html>
+    <head>
+        <title>Semantic Mindmap</title>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <!-- Bootstrap -->
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+                 integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+                 crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+         <link href="{{url_for('static', filename = 'simple-sidebar.css')}}" rel="stylesheet">
+
+         <!-- js mindmap -->
+
+
+        <!-- Other custom styles and custom javascript -->
+        <link href="{{url_for('static', filename = 'styles.css')}}" rel="stylesheet">
+        <script src="{{url_for('static', filename = 'script.js')}}"></script>
+    </head>
+    <body>
+
+      <div id="wrapper">
+
+          <!-- Sidebar -->
+          <div id="sidebar-wrapper">
+              <ul class="sidebar-nav">
+                  <li class="sidebar-brand">
+                      <a href="#">Semantic Mindmap</a>
+                  </li>
+                  <li>
+                    <!-- <a href="#">Enter text below</a> -->
+                    <div class="form-group">
+                      <label for="textarea">Enter text below</label>
+                      <textarea class="form-control" id="textarea" rows="20"></textarea>
+                    </div>
+                  </li>
+                  <li>
+                    <button id="generate-button" type="submit" class="btn btn-primary">Generate</button>
+                  </li>
+              </ul>
+          </div>
+          <!-- /#sidebar-wrapper -->
+
+          <!-- Page Content -->
+          <div id="page-content-wrapper">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12">
+                          <h1>Semantic Mindmap</h1>
+                          <small class="text-muted">Generates a mindmap based on semantic analysis.</small>
+                          <h4>Summary</h4>
+                          <p id="summary">Skateboard post-ironic viral enamel pin vegan craft beer green juice pinterest,
+                            kombucha dreamcatcher. Hot chicken squid fashion axe chambray. Fam mumblecore pinterest
+                            yr mlkshk. Ugh paleo blog activated charcoal, fixie polaroid migas poke tattooed.
+                            Thundercats tattooed retro af forage. 90's semiotics la croix, synth venmo man bun
+                            portland salvia. Pok pok put a bird on it gentrify, tofu next level viral helvetica
+                            asymmetrical aesthetic hammock lumbersexual enamel pin cornhole woke butcher. </p>
+
+
+
+                          <!-- <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a> -->
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <!-- /#page-content-wrapper -->
+
+      </div>
+      <!-- /#wrapper -->
+
+      <script>
+        var flask_endpoint = "{{url_for('endpoint_name')}}"
+
+        console.log(flask_endpoint);
+
+        $('#generate-button').on('click', function(){
+           console.log("button clicked");
+
+           // grab the text in the text area and send it to the server
+           var text = $("#textarea").val();
+           var data = {'text': text};
+
+           $.ajax({
+               type : "POST",
+               url : flask_endpoint,
+               data: JSON.stringify(data),
+               contentType: 'application/json;charset=UTF-8',
+           }).done(function (result) {
+               console.log(result);
+           });
+
+           console.log('data has been sent to the server');
+        });
+      </script>
+
+      <!-- Menu Toggle Script -->
+      <script>
+      $("#menu-toggle").click(function(e) {
+          e.preventDefault();
+          $("#wrapper").toggleClass("toggled");
+      });
+      </script>
+
+  </body>
+</html>
